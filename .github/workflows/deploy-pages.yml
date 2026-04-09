@@ -47,7 +47,7 @@ jobs:
             BASE_PATH=$(node -e "try { const u = new URL(process.argv[1]); const p = u.pathname.replace(/\/$/, ''); console.log(p === '/' ? '' : p); } catch { console.log(''); }" "$NEXT_PUBLIC_SITE_URL")
           fi
 
-          if [ -z "$BASE_PATH" ]; then
+          if [ -z "$BASE_PATH" ] && [ -z "$NEXT_PUBLIC_SITE_URL" ]; then
             REPO_NAME="${GITHUB_REPOSITORY#*/}"
             USER_PAGES_REPO="${GITHUB_REPOSITORY_OWNER}.github.io"
             if [ "$REPO_NAME" != "$USER_PAGES_REPO" ]; then
