@@ -29,7 +29,7 @@ export default function SearchBar({ value, onChange, resultCount, totalCount }: 
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Search contacts..."
-          className="w-full pl-10 pr-10 py-2.5 bg-card border border-card-border rounded-lg text-sm text-foreground placeholder-muted/60 focus:outline-none focus:ring-1 focus:ring-accent/50 focus:border-accent/50 transition-all"
+          className="w-full h-9 pl-9 pr-10 text-[13px] text-foreground"
         />
         {value && (
           <button

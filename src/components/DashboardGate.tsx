@@ -118,6 +118,15 @@ export default function DashboardGate() {
 
   useEffect(() => {
     const checkAuth = async () => {
+      // Dev bypass: skip OAuth when NEXT_PUBLIC_DEV_BYPASS_AUTH=true
+      if (process.env.NEXT_PUBLIC_DEV_BYPASS_AUTH === "true") {
+        setUserEmail("dev@localhost");
+        setAuthenticated(true);
+        setIsAdmin(true);
+        setChecked(true);
+        return;
+      }
+
       if (!supabase) {
         setChecked(true);
         router.push("/login");
@@ -190,39 +199,37 @@ export default function DashboardGate() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-card-border bg-card/60 backdrop-blur-xl sticky top-0 z-10">
-        <div className="max-w-[1800px] mx-auto px-6 py-4 flex items-center justify-between">
+      <header className="border-b border-card-border bg-sidebar sticky top-0 z-10">
+        <div className="max-w-[1800px] mx-auto px-5 flex items-center justify-between min-h-[48px]">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-accent/20 flex items-center justify-center">
-              <svg className="h-4 w-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div>
-            <h1 className="text-lg font-semibold text-foreground tracking-tight">OTCR Contact Database</h1>
+            <h1 className="text-[14px] font-semibold text-foreground tracking-tight">OTCR Contact Database</h1>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-muted bg-card border border-card-border rounded-md px-2.5 py-1">
+            <span className="text-[11px] font-mono text-[#3a96e5] px-2.5 py-1" style={{ background: "#0d2340", border: "1px solid rgba(58,150,229,0.2)" }}>
               {contacts.length} contacts
             </span>
             {isAdmin && (
               <button
                 type="button"
                 onClick={() => setEditMode((v) => !v)}
-                className={`text-xs px-2.5 py-1 rounded-md border transition-colors ${
-                  editMode
-                    ? "bg-accent text-white border-accent"
-                    : "bg-card text-muted border-card-border hover:text-foreground"
+                className={`text-[12px] px-2.5 py-1 transition-colors ${
+                  editMode ? "text-white" : "text-muted hover:text-foreground"
                 }`}
+                style={editMode
+                  ? { background: "#3a96e5", border: "1px solid #3a96e5" }
+                  : { background: "transparent", border: "1px solid rgba(255,255,255,0.08)" }
+                }
               >
                 {editMode ? "Done editing" : "Edit database"}
               </button>
             )}
-            <div className="flex items-center gap-2 pl-3 border-l border-card-border">
-              <span className="text-xs text-muted">{userEmail}</span>
+            <div className="flex items-center gap-2 pl-3" style={{ borderLeft: "1px solid rgba(255,255,255,0.08)" }}>
+              <span className="text-[12px] text-muted">{userEmail}</span>
               <button
                 type="button"
                 onClick={handleLogout}
-                className="text-xs text-muted hover:text-foreground transition-colors"
+                className="text-[12px] text-muted hover:text-foreground transition-colors px-2 py-1"
+                style={{ border: "1px solid rgba(255,255,255,0.08)" }}
               >
                 Sign out
               </button>
@@ -230,7 +237,7 @@ export default function DashboardGate() {
           </div>
         </div>
       </header>
-      <main className="max-w-[1800px] mx-auto px-6 py-6">
+      <main className="max-w-[1800px] mx-auto px-5 py-4">
         {contactsLoading ? (
           <div className="text-muted text-sm">Loading contacts...</div>
         ) : (

@@ -35,10 +35,10 @@ type SortKey = "name" | "company" | "industry" | "contactType";
 type SortDir = "asc" | "desc";
 
 const TYPE_STYLES: Record<string, string> = {
-  "OTCR & UIUC": "bg-indigo-500/10 text-indigo-400 ring-indigo-500/20",
-  "OTCR Only": "bg-violet-500/10 text-violet-400 ring-violet-500/20",
-  "UIUC Only": "bg-amber-500/10 text-amber-400 ring-amber-500/20",
-  "Other": "bg-zinc-500/10 text-zinc-400 ring-zinc-500/20",
+  "OTCR & UIUC": "bg-[#0d2340] text-[#3a96e5]",
+  "OTCR Only":   "bg-[#111a24] text-[#5a7090]",
+  "UIUC Only":   "bg-[#0d2340] text-[#6aaee8]",
+  "Other":       "bg-[#111a24] text-[#5a7090]",
 };
 
 export default function ContactTable({
@@ -113,7 +113,7 @@ export default function ContactTable({
       <th
         key={field}
         onClick={() => handleSort(field)}
-        className="px-4 py-2.5 text-left text-[11px] font-medium text-muted uppercase tracking-wider cursor-pointer hover:text-foreground select-none transition-colors"
+        className="px-3 py-2 text-left text-[11px] font-medium text-muted uppercase tracking-[0.08em] cursor-pointer hover:text-foreground select-none transition-colors whitespace-nowrap"
       >
         <span className="flex items-center gap-1">
           {label}
@@ -244,23 +244,23 @@ export default function ContactTable({
   }
 
   return (
-    <div className="bg-card rounded-xl border border-card-border h-full flex flex-col">
+    <div className="border border-card-border h-full flex flex-col" style={{ background: "rgba(7, 18, 32, 0.9)" }}>
       <div className="relative flex-1 overflow-auto">
         <table className="min-w-full table-auto">
-          <thead className="sticky top-0 z-10 bg-card">
+          <thead className="sticky top-0 z-10" style={{ background: "#071220" }}>
             <tr className="border-b border-card-border">
               {renderSortHeader("Name", "name")}
               {renderSortHeader("Company", "company")}
               {renderSortHeader("Industry", "industry")}
               {renderSortHeader("Type", "contactType")}
-              <th className="px-4 py-2.5 text-left text-[11px] font-medium text-muted uppercase tracking-wider w-[260px] max-w-[260px]">
+              <th className="px-3 py-2 text-left text-[11px] font-medium text-muted uppercase tracking-[0.08em] w-[220px] max-w-[220px]">
                 Email
               </th>
-              <th className="px-4 py-2.5 text-left text-[11px] font-medium text-muted uppercase tracking-wider">
+              <th className="px-3 py-2 text-left text-[11px] font-medium text-muted uppercase tracking-[0.08em]">
                 LinkedIn
               </th>
               {editMode && (
-                <th className="px-4 py-2.5 text-left text-[11px] font-medium text-muted uppercase tracking-wider w-[120px]">
+                <th className="px-3 py-2 text-left text-[11px] font-medium text-muted uppercase tracking-[0.08em] w-[100px]">
                   Actions
                 </th>
               )}
@@ -270,37 +270,37 @@ export default function ContactTable({
             {sorted.map((contact, i) => (
               <tr
                 key={contact.id}
-                className={`border-b border-card-border/50 hover:bg-accent-soft transition-colors ${i === sorted.length - 1 ? "border-b-0" : ""}`}
+                className={`border-b border-card-border transition-colors group ${i === sorted.length - 1 ? "border-b-0" : ""}`}
               >
-                <td className="px-4 py-3 text-sm font-medium text-foreground whitespace-nowrap">
+                <td className="data-primary px-3 py-2 text-[13px] whitespace-nowrap border-l-2 border-l-transparent group-hover:border-l-accent transition-colors">
                   {contact.name}
                 </td>
-                <td className="px-4 py-3 text-sm text-muted max-w-[180px] truncate" title={contact.company}>{contact.company}</td>
-                <td className="px-4 py-3 text-sm text-muted max-w-[180px] truncate" title={contact.industry}>
+                <td className="data-secondary px-3 py-2 text-[13px] max-w-[160px] truncate" title={contact.company}>{contact.company}</td>
+                <td className="data-secondary px-3 py-2 text-[13px] max-w-[160px] truncate" title={contact.industry}>
                   {contact.industry}
                 </td>
-                <td className="px-4 py-3 whitespace-nowrap">
-                  <span className={`inline-flex px-2 py-0.5 rounded-md text-[11px] font-medium ring-1 ring-inset ${TYPE_STYLES[contact.contactType] || TYPE_STYLES["Other"]}`}>
+                <td className="px-3 py-2 whitespace-nowrap">
+                  <span className={`inline-flex px-1.5 py-0.5 text-[11px] font-medium ${TYPE_STYLES[contact.contactType] || TYPE_STYLES["Other"]}`}>
                     {contact.contactType}
                   </span>
                 </td>
-                <td className="px-4 py-3 w-[260px] max-w-[260px]">
+                <td className="px-3 py-2 w-[220px] max-w-[220px]">
                   <div className="flex flex-col gap-0.5">
                     {contact.email && (
                       <CopyEmail
                         email={contact.email}
-                        className="text-[13px] text-accent hover:text-accent/80 transition-colors font-mono truncate block"
+                        className="text-[12px] text-accent hover:text-white transition-colors font-mono truncate block"
                       />
                     )}
                     {contact.altEmail && (
                       <CopyEmail
                         email={contact.altEmail}
-                        className="text-[11px] text-muted/50 hover:text-accent transition-colors font-mono truncate block"
+                        className="text-[11px] text-muted hover:text-accent transition-colors font-mono truncate block"
                       />
                     )}
                   </div>
                 </td>
-                <td className="px-4 py-3 whitespace-nowrap">
+                <td className="px-3 py-2 whitespace-nowrap">
                   {contact.linkedin ? (
                     <a
                       href={
@@ -310,35 +310,35 @@ export default function ContactTable({
                       }
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[13px] text-accent hover:text-accent/80 underline-offset-2 hover:underline"
+                      className="text-[12px] text-accent hover:text-foreground transition-colors"
                     >
                       View
                     </a>
                   ) : (
-                    <span className="text-xs text-muted">—</span>
+                    <span className="text-[12px] text-muted">—</span>
                   )}
                 </td>
                 {editMode && (
-                  <td className="px-4 py-3 whitespace-nowrap">
+                  <td className="px-3 py-2 whitespace-nowrap">
                     {typeof contact.supabaseId === "number" ? (
                       <div className="flex gap-2">
                         <button
                           type="button"
                           onClick={() => handleEdit(contact)}
-                          className="text-xs text-blue-500 hover:text-blue-400"
+                          className="text-[12px] text-accent hover:text-foreground transition-colors"
                         >
                           Edit
                         </button>
                         <button
                           type="button"
                           onClick={() => handleDelete(contact.supabaseId as number)}
-                          className="text-xs text-red-500 hover:text-red-400"
+                          className="text-[12px] text-muted hover:text-foreground transition-colors"
                         >
                           Delete
                         </button>
                       </div>
                     ) : (
-                      <span className="text-xs text-muted">—</span>
+                      <span className="text-[12px] text-muted">—</span>
                     )}
                   </td>
                 )}

@@ -27,14 +27,14 @@ function FilterSection({
   const toggle = onToggle || (() => setInternalOpen(!internalOpen));
 
   return (
-    <div className="border-b border-card-border last:border-b-0">
+    <div style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }} className="last:[border-bottom:none]">
       <button
         onClick={toggle}
-        className="w-full flex items-center justify-between py-3 px-4 hover:bg-accent-soft transition-colors"
+        className="w-full flex items-center justify-between py-2 pr-3 pl-3 border-l-2 border-l-accent hover:bg-row-hover transition-colors"
       >
-        <h3 className="text-sm font-semibold text-foreground">{title}</h3>
+        <h3 className="text-[10px] font-semibold text-muted uppercase tracking-[0.1em]">{title}</h3>
         <svg
-          className={`h-4 w-4 text-muted transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`h-3 w-3 text-muted transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -42,7 +42,7 @@ function FilterSection({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {isOpen && <div className="pb-3 px-4">{children}</div>}
+      {isOpen && <div className="pb-2.5 px-3">{children}</div>}
     </div>
   );
 }
@@ -59,16 +59,17 @@ function CheckboxFilter({
   count?: number;
 }) {
   return (
-    <label className="flex items-center gap-2 py-1.5 cursor-pointer group hover:text-foreground transition-colors">
+    <label className="flex items-center gap-2 py-1 cursor-pointer group hover:text-foreground transition-colors">
       <input
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="w-4 h-4 rounded border-card-border text-accent focus:ring-accent/50 focus:ring-1 cursor-pointer accent-accent"
+        className="w-3.5 h-3.5 border border-card-border cursor-pointer flex-shrink-0"
+        style={{ accentColor: "#3a96e5" }}
       />
-      <span className="text-sm text-muted group-hover:text-foreground flex-1">{label}</span>
+      <span className="text-[12px] text-muted group-hover:text-foreground flex-1">{label}</span>
       {count !== undefined && (
-        <span className="text-xs text-muted/60 font-mono">{count}</span>
+        <span className="text-[11px] text-muted font-mono">{count}</span>
       )}
     </label>
   );
@@ -126,13 +127,13 @@ function CompanySearchFilter({
           {selected.map((company) => (
             <span
               key={company}
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-accent/15 text-accent text-xs"
+              className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#0d2340] text-[#3a96e5] text-[11px]"
             >
               {company}
               <button
                 type="button"
                 onClick={() => removeCompany(company)}
-                className="hover:text-foreground rounded transition-colors"
+                className="hover:text-foreground transition-colors"
                 title="Remove"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -153,12 +154,12 @@ function CompanySearchFilter({
           }}
           onFocus={() => setOpen(true)}
           placeholder={placeholder}
-          className="w-full px-3 py-2 bg-card border border-card-border rounded-lg text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent/50 focus:border-accent/50"
+          className="w-full px-2.5 py-1.5 bg-sidebar border border-card-border text-[12px] text-foreground placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
         />
         {showDropdown && (
-          <ul className="absolute z-20 mt-1 w-full max-h-48 overflow-y-auto bg-card border border-card-border rounded-lg shadow-lg py-1">
+          <ul className="absolute z-20 mt-0 w-full max-h-48 overflow-y-auto bg-sidebar border border-card-border py-0.5">
             {filtered.length === 0 ? (
-              <li className="px-3 py-2 text-sm text-muted">
+              <li className="px-2.5 py-1.5 text-[12px] text-muted">
                 {search.trim() ? "No companies match" : "All companies selected"}
               </li>
             ) : (
@@ -167,7 +168,7 @@ function CompanySearchFilter({
                   <button
                     type="button"
                     onClick={() => addCompany(opt)}
-                    className="w-full text-left px-3 py-2 text-sm text-foreground hover:bg-accent-soft transition-colors"
+                    className="w-full text-left px-2.5 py-1.5 text-[12px] text-foreground hover:bg-row-hover transition-colors"
                   >
                     {opt}
                   </button>
@@ -235,13 +236,13 @@ function IndustrySearchFilter({
           {selected.map((industry) => (
             <span
               key={industry}
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-accent/15 text-accent text-xs"
+              className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#0d2340] text-[#3a96e5] text-[11px]"
             >
               {industry}
               <button
                 type="button"
                 onClick={() => removeIndustry(industry)}
-                className="hover:text-foreground rounded transition-colors"
+                className="hover:text-foreground transition-colors"
                 title="Remove"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -262,12 +263,12 @@ function IndustrySearchFilter({
           }}
           onFocus={() => setOpen(true)}
           placeholder={placeholder}
-          className="w-full px-3 py-2 bg-card border border-card-border rounded-lg text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent/50 focus:border-accent/50"
+          className="w-full px-2.5 py-1.5 bg-sidebar border border-card-border text-[12px] text-foreground placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
         />
         {showDropdown && (
-          <ul className="absolute z-20 mt-1 w-full max-h-48 overflow-y-auto bg-card border border-card-border rounded-lg shadow-lg py-1">
+          <ul className="absolute z-20 mt-0 w-full max-h-48 overflow-y-auto bg-sidebar border border-card-border py-0.5">
             {filtered.length === 0 ? (
-              <li className="px-3 py-2 text-sm text-muted">
+              <li className="px-2.5 py-1.5 text-[12px] text-muted">
                 {search.trim() ? "No industries match" : "All industries selected"}
               </li>
             ) : (
@@ -276,7 +277,7 @@ function IndustrySearchFilter({
                   <button
                     type="button"
                     onClick={() => addIndustry(opt)}
-                    className="w-full text-left px-3 py-2 text-sm text-foreground hover:bg-accent-soft transition-colors"
+                    className="w-full text-left px-2.5 py-1.5 text-[12px] text-foreground hover:bg-row-hover transition-colors"
                   >
                     {opt}
                   </button>
@@ -310,10 +311,10 @@ export default function FilterSidebar({
   };
 
   return (
-    <div className="w-64 bg-card border-r border-card-border flex-shrink-0 h-full overflow-y-auto">
-      <div className="sticky top-0 bg-card border-b border-card-border px-4 py-3 z-10">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-base font-semibold text-foreground">Filters</h2>
+    <div className="w-56 bg-sidebar flex-shrink-0 h-full overflow-y-auto">
+      <div className="sticky top-0 bg-sidebar px-3 py-2.5 z-10" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="flex items-center justify-between">
+          <h2 className="text-[11px] font-semibold text-foreground uppercase tracking-[0.08em]">Filters</h2>
           {hasActiveFilters && (
             <button
               onClick={() =>
@@ -323,14 +324,14 @@ export default function FilterSidebar({
                   alumniStatus: [],
                 })
               }
-              className="text-xs text-muted hover:text-foreground transition-colors"
+              className="text-[11px] text-muted hover:text-foreground transition-colors"
             >
-              Reset All
+              Clear all
             </button>
           )}
         </div>
         {hasActiveFilters && (
-          <p className="text-xs text-muted">
+          <p className="text-[11px] text-muted mt-0.5">
             {Object.values(filters).reduce((acc, v) => {
               if (Array.isArray(v)) return acc + v.length;
               return acc + (v ? 1 : 0);
@@ -340,7 +341,7 @@ export default function FilterSidebar({
         )}
       </div>
 
-      <div className="divide-y divide-card-border">
+      <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
         {/* Company */}
         <FilterSection title="Current Company">
           <CompanySearchFilter

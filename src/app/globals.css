@@ -1,50 +1,128 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0c0c0f;
-  --foreground: #e4e4e7;
-  --card: #16161a;
-  --card-border: #232329;
-  --muted: #71717a;
-  --accent: #6366f1;
-  --accent-soft: rgba(99, 102, 241, 0.12);
+  --background: #02080a;
+  --foreground: #dde4ed;
+  --sidebar: #0d2839;
+  --card: #071220;
+  --row-hover: #0f1e2e;
+  --card-border: #162030;
+  --muted: #6b8599;
+  --accent: #3a96e5;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-sidebar: var(--sidebar);
   --color-card: var(--card);
+  --color-row-hover: var(--row-hover);
   --color-card-border: var(--card-border);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+/* ── Base ─────────────────────────────────────────────── */
+
+html {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(135deg, #05161e 0%, #02080a 100%) fixed;
+  background-size: cover;
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-inter), Inter, system-ui, -apple-system, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+/* Let body gradient show through full-page wrappers */
+.bg-background {
+  background-color: transparent;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+
+/* ── Sidebar ──────────────────────────────────────────── */
+
+.bg-sidebar {
+  background: #0d2839 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
-::-webkit-scrollbar-thumb {
-  background: #2a2a30;
-  border-radius: 3px;
+
+/* ── Table ────────────────────────────────────────────── */
+
+.bg-card {
+  background-color: #071220 !important;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #3a3a42;
+
+/* Column headers */
+th {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.07em !important;
+  color: #5a7090 !important;
 }
+
+/* Table cells */
+td {
+  line-height: 1.5;
+}
+
+/* Row hover: electric blue gradient fading right */
+tbody tr:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(58, 150, 229, 0.10) 0%,
+    transparent 80%
+  ) !important;
+}
+
+/* Primary data cells (names) */
+td.data-primary {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Secondary data cells (company, industry) */
+td.data-secondary {
+  color: #7a9ab8;
+}
+
+/* ── Inputs ───────────────────────────────────────────── */
+
+input[type="text"],
+input[type="email"],
+input:not([type="checkbox"]) {
+  background: rgba(5, 16, 28, 0.85) !important;
+  border: 1px solid #162030 !important;
+  color: var(--foreground) !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input:not([type="checkbox"]):focus {
+  outline: none !important;
+  border-color: #3a96e5 !important;
+  box-shadow: 0 0 0 2px rgba(58, 150, 229, 0.18) !important;
+}
+
+input::placeholder {
+  color: #4a6070 !important;
+}
+
+/* ── Scrollbar ────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #162030; }
+::-webkit-scrollbar-thumb:hover { background: #3a96e5; }
 
 /* Select styling */
-select {
-  color-scheme: dark;
-}
+select { color-scheme: dark; }
